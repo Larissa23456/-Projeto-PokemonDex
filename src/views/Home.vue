@@ -1,7 +1,16 @@
 <template>
   <main>
+    <div class="title">
+      <img
+        src="@/assets/pokemon-ball.png"
+        alt="pokeball"
+        class="img-pokeball"
+      />
+      <h1 class="text-styled">PokéDex</h1>
+    </div>
+
     <div class="content">
-      <h1>PokéDex</h1>
+      <hr />
       <h2>
         Explore os pokémons de todas as gerações com imagens e informações
         atualizadas. Utilize a busca para encontrar seu Pokémon favorito e
@@ -11,6 +20,11 @@
     </div>
     <poke-list :pokemons="pokemonListItem"></poke-list>
     <poke-pagination></poke-pagination>
+    <footer class="credits">
+      3°A de Informática <br />Larissa de Oliveira Mendes <br />Kauan Turcato
+      <br />
+      Lucas Daniel
+    </footer>
   </main>
 </template>
 
@@ -19,41 +33,78 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import PokeList from "../components/PokeList.vue";
 import PokePagination from "../components/PokePagination.vue";
-import { getPokemonByName, type PokemonListItem } from "../services/pokemonService";
+import {
+  getPokemonByName,
+  type PokemonListItem,
+} from "../services/pokemonService";
 
 export default defineComponent({
-    components: {PokeList, PokePagination},
-    data() {
-        return {
-            pokemonListItem: [] as PokemonListItem[],
-            apiUrl: 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=20',
-            totalPokemon: 0
-        };
+  components: { PokeList, PokePagination },
+  data() {
+    return {
+      pokemonListItem: [] as PokemonListItem[],
+      apiUrl: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
+      totalPokemon: 0,
+    };
+  },
+
+  mounted() {
+    this.loadPokemonList(this.apiUrl);
+  },
+
+  methods: {
+    async loadPokemonList(url: string) {
+      const response = await axios.get(url);
+
+      const pokemonWithImages = await Promise.all(
+        response.data.results.map(async (pokemon: { name: string }) => {
+          const details = await getPokemonByName(pokemon.name);
+          return {
+            name: pokemon.name,
+            image: details.sprites.front_default,
+          };
+        })
+      );
+      this.pokemonListItem = pokemonWithImages;
+      this.totalPokemon = response.data.count;
     },
-
-    mounted() {
-        this.loadPokemonList(this.apiUrl);
-    },
-
-    methods: {
-        async loadPokemonList(url: string) {
-            const response = await axios.get(url);
-
-            const pokemonWithImages = await Promise.all(
-                response.data.results.map(async (pokemon: { name: string; }) => {
-                    const details = await getPokemonByName(pokemon.name);
-                    return {
-                        name: pokemon.name,
-                        image: details.sprites.front_default,
-                    }
-                })
-            );
-            this.pokemonListItem = pokemonWithImages;
-            this.totalPokemon = response.data.count;
-        }
-    }
+  },
 });
 </script>
 
 <style>
+body {
+  background-color: #cbecff;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
+.img-pokeball {
+  width: 50px;
+  height: auto;
+}
+
+.text-styled {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+hr {
+  border: 2px solid red;
+  margin-top: 1em;
+  width: 100%;
+}
 </style>
