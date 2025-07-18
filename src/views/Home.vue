@@ -32,9 +32,8 @@
     </div>
 
     <footer class="credits">
-      3°A de Informática <br />
-      Larissa de Oliveira Mendes <br />
-      Kauan Turcato <br />
+      Kauan Turcato, 
+      Larissa de Oliveira Mendes &
       Lucas Daniel
     </footer>
   </main>
@@ -115,7 +114,12 @@ body {
   font-family: "Press Start 2P", system-ui;
   font-weight: 400;
   font-style: normal;
-  color: black;
+  color:  #FFCB05;
+  text-shadow: 
+    -1px -1px 0 #3B4CCA,
+     1px -1px 0 #3B4CCA,
+    -1px  1px 0 #3B4CCA,
+     1px  1px 0 #3B4CCA;
 }
 
 .content {
@@ -139,7 +143,12 @@ body {
 .decor {
   text-align: center;
   font-size: 5em;
-  color: red;
+  color: #FFCB05;
+  text-shadow: 
+    -1px -1px 0 #3B4CCA,
+     1px -1px 0 #3B4CCA,
+    -1px  1px 0 #3B4CCA,
+     1px  1px 0 #3B4CCA;
 }
 
 input#poke-name {
@@ -147,15 +156,36 @@ input#poke-name {
   padding: 10px;
   font-size: 14px;
   border-radius: 5px;
-  border: 1px solid red;
+  border: 1px solid #FFCB05;
+  background-color: white;
+  box-shadow: 0 0 0 0.3px #3B4CCA;
   width: 100%;
   max-width: 550px;
   display: block; 
 }
 
 hr {
-  border: 2px solid red;
+  border: 2px solid #FFCB05;
+  box-shadow: 0 0 0 0.5px #3B4CCA;
   margin-top: 1em;
   width: 100%;
 }
+
+footer {
+  position: fixed;
+  height: 50px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #FFCB05;
+  border: 0.5px solid #3B4CCA;
+  margin: 0;
+  padding: 1em 0;
+  text-align: center;
+  z-index: 1000;
+  color: #3B4CCA;
+  font-size: 14px;
+  align-items: center;
+}
+
 </style>
