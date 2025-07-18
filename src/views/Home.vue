@@ -26,16 +26,15 @@
           placeholder="Buscar Pokémon"
         />
       </div>
-
-      <poke-list :pokemons="filteredPokemonList"></poke-list>
-      <poke-pagination></poke-pagination>
     </div>
+    <poke-list :pokemons="filteredPokemonList"></poke-list>
+      <poke-pagination></poke-pagination>
 
-    <footer class="credits">
+    <v-footer class="credits">
       Kauan Turcato, 
       Larissa de Oliveira Mendes &
       Lucas Daniel
-    </footer>
+    </v-footer>
   </main>
 </template>
 
@@ -82,6 +81,8 @@ export default defineComponent({
           return {
             name: pokemon.name,
             image: details.sprites.front_default,
+            height: details.height,
+            weight: details.weight,
           };
         })
       );
@@ -171,7 +172,8 @@ hr {
   width: 100%;
 }
 
-footer {
+.credits {
+  display: flex;
   position: fixed;
   height: 50px;
   bottom: 0;
@@ -181,7 +183,7 @@ footer {
   border: 0.5px solid #3B4CCA;
   margin: 0;
   padding: 1em 0;
-  text-align: center;
+  justify-content: center;
   z-index: 1000;
   color: #3B4CCA;
   font-size: 14px;
