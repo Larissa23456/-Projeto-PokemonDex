@@ -8,21 +8,33 @@
       />
       <h1 class="text-styled">PokéDex</h1>
     </div>
-
+    <hr />
     <div class="content">
-      <hr />
-      <h2>
-        Explore os pokémons de todas as gerações com imagens e informações
-        atualizadas. Utilize a busca para encontrar seu Pokémon favorito e
-        navegue entre as páginas para descobrir novas criaturas do universo
-        Pokémon.
-      </h2>
+      <div class="texts-content">
+        <h2>
+          Explore os pokémons de todas as gerações com imagens e informações
+          atualizadas. Utilize a busca para encontrar seu Pokémon favorito e
+          navegue entre as páginas para descobrir novas criaturas do universo
+          Pokémon.
+          
+        </h2>
+        <p class="decor">. . .</p>
+        <input
+          type="text"
+          id="poke-name"
+          v-model="searchTerm"
+          placeholder="Buscar Pokémon"
+        />
+      </div>
+
+      <poke-list :pokemons="filteredPokemonList"></poke-list>
+      <poke-pagination></poke-pagination>
     </div>
-    <poke-list :pokemons="pokemonListItem"></poke-list>
-    <poke-pagination></poke-pagination>
+
     <footer class="credits">
-      3°A de Informática <br />Larissa de Oliveira Mendes <br />Kauan Turcato
-      <br />
+      3°A de Informática <br />
+      Larissa de Oliveira Mendes <br />
+      Kauan Turcato <br />
       Lucas Daniel
     </footer>
   </main>
@@ -45,7 +57,16 @@ export default defineComponent({
       pokemonListItem: [] as PokemonListItem[],
       apiUrl: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
       totalPokemon: 0,
+      searchTerm: "", // Novo: termo de busca
     };
+  },
+
+  computed: {
+    filteredPokemonList(): PokemonListItem[] {
+      return this.pokemonListItem.filter((pokemon) =>
+        pokemon.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    },
   },
 
   mounted() {
@@ -78,12 +99,6 @@ body {
   margin: 0;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .title {
   display: flex;
   flex-direction: row;
@@ -100,6 +115,42 @@ body {
   font-family: "Press Start 2P", system-ui;
   font-weight: 400;
   font-style: normal;
+  color: black;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.texts-content {
+  margin: 10px 20px;
+  flex-direction: row;
+  justify-content: center;
+  text-align: justify;
+  text-indent: 2em;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+.decor {
+  text-align: center;
+  font-size: 5em;
+  color: red;
+}
+
+input#poke-name {
+  margin: 1em auto;          
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid red;
+  width: 100%;
+  max-width: 550px;
+  display: block; 
 }
 
 hr {
